@@ -14,3 +14,5 @@ CAD:
 -resize and fit the "cutout" on the controller as you see fit.
 
 -all individual parts are provided as both .stl and .step files.
+
+-the CAD parts/model are for the transmitter. For the receiver, simply attach an NRF24l01 to the robot etc. that you want to receive the data.
