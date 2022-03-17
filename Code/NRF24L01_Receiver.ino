@@ -7,8 +7,9 @@
 RF24 radio(9, 8);  // CE, CSN; CSN = 6 for nano, 8 for uno
 
 //address through which two modules communicate.
-const byte address[6] = "00001";
-  
+const byte address[6] = "00001";//use whatever address as long as it's 32 bit or less
+int x1;
+int y1;
   
 void setup()
 {
@@ -17,7 +18,7 @@ void setup()
   
   //radio.setChannel(120);
   radio.begin();
-  
+  radio.powerUp();
   
   //set the address
   
@@ -32,16 +33,14 @@ void loop()
   //Read the data if available in buffer
   if (radio.available())
   {
-    int x_val;
-    int y_val;
-    radio.read(&x_val, sizeof(x_val));
-    
-    radio.read(&y_val, sizeof(y_val));
+    radio.read(&x1, sizeof(x1));
+    delay(30);
+    radio.read(&y1, sizeof(y1));
     Serial.println(" ");
     Serial.print("X: ");
-    Serial.print(x_val);
+    Serial.print(x1);
     Serial.print("   Y: ");
-    Serial.print(y_val);
+    Serial.print(y1);
   }
 
   //else;
