@@ -44,7 +44,7 @@ const int X_pin = 0; // analog pin connected to X output
 const int Y_pin = 1; // analog pin connected to Y output
 const int button1 = 6;
 //address through which two modules communicate.
-const byte addresses[6] = "ball";
+const byte addresses[6] = "ball";//use whatever address you want as long as it's under 32 bit
 
 int x1;
 int y1;
