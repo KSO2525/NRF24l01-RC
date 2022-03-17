@@ -44,9 +44,8 @@ const int X_pin = 0; // analog pin connected to X output
 const int Y_pin = 1; // analog pin connected to Y output
 const int button1 = 6;
 //address through which two modules communicate.
-const byte addresses [6] = "ball_robot";
-int address_list_size = 1;//number of addresses
-int current_address = 0;
+const byte addresses[6] = "ball";
+
 int x1;
 int y1;
 int x1_mid = 508;
@@ -55,8 +54,10 @@ int y1_mid = 516;
 //int y_val;
 void setup()
 {
+  radio.begin();
+  radio.openWritingPipe(addresses);
+  radio.stopListening();
   Serial.begin(9600);
-
   // SSD1306_SWITCHCAPVCC = generate display voltage from 3.3V internally
   if(!display.begin(SSD1306_SWITCHCAPVCC, SCREEN_ADDRESS)) {
     Serial.println(F("SSD1306 allocation failed"));
@@ -65,19 +66,17 @@ void setup()
   display.display();
   delay(2000); // Pause for 2 seconds
   display.clearDisplay();
-  radio.begin();
+  
   //radio.setChannel(120);
   //radio.powerUp();
-  radio.openWritingPipe(addresses);
+  
   //radio.setPALevel(RF24_PA_MIN);
   //set the address
-  pinMode(button1, INPUT);
+  //pinMode(button1, INPUT);
   
   //Set module as transmitter
-  radio.stopListening();
 }
-void loop()
-{
+void loop(){
   //Send message to receiver
   y1 = analogRead(X_pin);
   x1 = analogRead(Y_pin);
@@ -112,15 +111,13 @@ void loop()
       y1 = -1000;
     }
   }  
-  //x1 = [-1021, 1035]
-  //y1 = [-1021, 1003]
   //Serial.println(radio.write(&text, sizeof(text)));
   radio.write(&x1, sizeof(x1));
+  delay(10);
   radio.write(&y1, sizeof(y1));
   screen_ball();
   
 }
-
 void screen_ball(){
   display.clearDisplay();
   display.setTextColor(SSD1306_WHITE);
@@ -132,11 +129,77 @@ void screen_ball(){
   display.print(y1);
   display.display();
 }
+/*void joysticks(){
+  y1 = analogRead(X_pin);
+  x1 = analogRead(Y_pin);
+  //const char text[] = data;
+  if (x1 >= x1_mid - 2 && x1 <= x1_mid + 2){
+    x1 = 0;//508
+  }
+  else if (x1 > x1_mid + 2){
+    x1 = (x1 - x1_mid) * 2.01;
+    if (x1 >= 1000){
+      x1 = 1000;
+    }
+  }
+  else if (x1 < x1_mid - 2){
+    x1 = (x1 - x1_mid) * 2.01;
+    if (x1 <= -1000){
+      x1 = -1000;
+    }
+  }
+  if (y1 >= y1_mid - 2 && y1 <= y1_mid + 2){
+    y1 = 0;//516
+  }
+  else if (y1 > y1_mid + 2){
+    y1 = (y1 - y1_mid) * 1.98;
+    if (y1 >= 1000){
+      y1 = 1000;
+    }
+  }
+  else if (y1 < y1_mid - 2){
+    y1 = (y1 - y1_mid) * 1.98;
+    if (y1 <= -1000){
+      y1 = -1000;
+    }
+  }  
+}
+*
 
-void address_loop(){
-  if (digitalRead(button1 == LOW)){
-    current_address += 1;
-    radio.openWritingPipe(current_address);
+/*void address_loop(){
+  byte address;
+  while(digitalRead(button1) == LOW){
+    joysticks();
+    Serial.print("hi");
+    display.clearDisplay();
+    
+    display.setCursor(30, 2);
+    display.write("Switch_1: no");
+    if (y1 > 0){
+      if (current_address + 1 <= address_list_size){
+        current_address += 1;
+      }
+      else;
+        current_address = 0;
+    }
+    display.setCursor(30, 10);
+    display.write("address: ");
+    address = addresses[current_address];
+    display.print(address);
+    if (y1 < 0){
+      if (current_address + 1 <= address_list_size){
+        current_address -= 1;
+      }
+      else;
+        current_address = address_list_size - 1;
+    }
+    display.setCursor(30, 10);
+    display.write("address: ");
+    address = addresses[current_address];
+    display.print(address);
     
   }
-}
+  display.clearDisplay();
+  display.setCursor(2, 20);
+  display.write("Switch_1: yes");
+}*/
