@@ -1,5 +1,5 @@
 /*
- * MUST FLIP X AND Y VALUES (Y_VAL = X)
+ * 
  */
 
 
@@ -10,7 +10,7 @@
 #include <RF24.h>
 #include <Adafruit_GFX.h>
 #include <Adafruit_SSD1306.h>
-
+//display variables
 #define SCREEN_WIDTH 128 // OLED display width, in pixels
 #define SCREEN_HEIGHT 64 // OLED display height, in pixels
 #define OLED_RESET     4 // Reset pin # (or -1 if sharing Arduino reset pin)
@@ -42,16 +42,14 @@ static const unsigned char PROGMEM logo_bmp[] =
 RF24 radio(9, 8);  // CE, CSN
 const int X_pin = 0; // analog pin connected to X output
 const int Y_pin = 1; // analog pin connected to Y output
-const int button1 = 6;
+const int button1 = 6;// button on the joystick
 //address through which two modules communicate.
-const byte addresses[6] = "ball";//use whatever address you want as long as it's under 32 bit
-
+const byte addresses[6] = "00001";//use whatever address you want as long as it's under 32 bit
+//variables for joystick
 int x1;
 int y1;
 int x1_mid = 508;
 int y1_mid = 516;
-//int x_val;
-//int y_val;
 void setup()
 {
   radio.begin();
@@ -129,77 +127,3 @@ void screen_ball(){
   display.print(y1);
   display.display();
 }
-/*void joysticks(){
-  y1 = analogRead(X_pin);
-  x1 = analogRead(Y_pin);
-  //const char text[] = data;
-  if (x1 >= x1_mid - 2 && x1 <= x1_mid + 2){
-    x1 = 0;//508
-  }
-  else if (x1 > x1_mid + 2){
-    x1 = (x1 - x1_mid) * 2.01;
-    if (x1 >= 1000){
-      x1 = 1000;
-    }
-  }
-  else if (x1 < x1_mid - 2){
-    x1 = (x1 - x1_mid) * 2.01;
-    if (x1 <= -1000){
-      x1 = -1000;
-    }
-  }
-  if (y1 >= y1_mid - 2 && y1 <= y1_mid + 2){
-    y1 = 0;//516
-  }
-  else if (y1 > y1_mid + 2){
-    y1 = (y1 - y1_mid) * 1.98;
-    if (y1 >= 1000){
-      y1 = 1000;
-    }
-  }
-  else if (y1 < y1_mid - 2){
-    y1 = (y1 - y1_mid) * 1.98;
-    if (y1 <= -1000){
-      y1 = -1000;
-    }
-  }  
-}
-*
-
-/*void address_loop(){
-  byte address;
-  while(digitalRead(button1) == LOW){
-    joysticks();
-    Serial.print("hi");
-    display.clearDisplay();
-    
-    display.setCursor(30, 2);
-    display.write("Switch_1: no");
-    if (y1 > 0){
-      if (current_address + 1 <= address_list_size){
-        current_address += 1;
-      }
-      else;
-        current_address = 0;
-    }
-    display.setCursor(30, 10);
-    display.write("address: ");
-    address = addresses[current_address];
-    display.print(address);
-    if (y1 < 0){
-      if (current_address + 1 <= address_list_size){
-        current_address -= 1;
-      }
-      else;
-        current_address = address_list_size - 1;
-    }
-    display.setCursor(30, 10);
-    display.write("address: ");
-    address = addresses[current_address];
-    display.print(address);
-    
-  }
-  display.clearDisplay();
-  display.setCursor(2, 20);
-  display.write("Switch_1: yes");
-}*/
