@@ -1,4 +1,4 @@
-# NRF24l01-RC-Fundamentals
+# CAD AND CODE FOR NRF24L01 BASED REMOTE CONTROL TRANSMITTER AND RECEIVER
 Transmitter and Receiver fundamentals for NRF24l01 
 
 CAD and Code are published for NRF24l01. CAD is done in Onshape. Code is done with Arduino.
