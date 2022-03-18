@@ -132,10 +132,12 @@ void loop(){
 void screen_ball(){
   display.clearDisplay();
   display.setTextColor(SSD1306_WHITE);
-  display.setCursor(2, 2);
+  display.setCursor(15, 2);
+  display.write("Everything Remote");
+  display.setCursor(2, 18);
   display.write("X1: ");
   display.print(x1);
-  display.setCursor(2, 10);
+  display.setCursor(2, 26);
   display.write("Y1: ");
   display.print(y1);
   display.display();
