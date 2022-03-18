@@ -50,6 +50,14 @@ int x1;
 int y1;
 int x1_mid = 508;
 int y1_mid = 516;
+
+struct MY_DATA{
+  int x1;
+  int y1;
+};
+
+MY_DATA data;
+
 void setup()
 {
   radio.begin();
@@ -109,10 +117,15 @@ void loop(){
       y1 = -1000;
     }
   }  
+  data.x1 = x1;
+  data.y1 = y1;
+  Serial.println(" ");
+  Serial.print("X: ");
+  Serial.print(data.x1);
+  Serial.print("   Y: ");
+  Serial.print(data.y1);
   //Serial.println(radio.write(&text, sizeof(text)));
-  radio.write(&x1, sizeof(x1));
-  delay(10);
-  radio.write(&y1, sizeof(y1));
+  radio.write(&data, sizeof(MY_DATA));
   screen_ball();
   
 }
