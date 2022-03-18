@@ -1,0 +1,5 @@
+Wiring:
+-NRF24l01 chips need to be wired to the UNO's SPI pins. Follow the pinout guide on Amazon and https://lastminuteengineers.com/nrf24l01-arduino-wireless-communication/ for reference.
+-All other pins are in the code. Please message if you need help
+-Joystick x,y pins go the analog pins. Button pin goes to a digital pin.
+-CAREFUL: NRF VCC GOES TO 3.3V!!!NOT 5V!!!
